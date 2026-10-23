@@ -152,8 +152,8 @@ async function seedSampleData(fresh: boolean) {
 async function main() {
   const fresh = process.argv.includes("--fresh");
   await connectDB();
-  // Make sure indexes exist before inserting data
-  await Promise.all([User.init(), Doctor.init(), Patient.init()]);
+  // Build the schema's indexes and drop any that are no longer in the schema
+  await Promise.all([User.syncIndexes(), Doctor.syncIndexes(), Patient.syncIndexes()]);
   await seedAdmin();
   await seedSampleData(fresh);
   await mongoose.disconnect();

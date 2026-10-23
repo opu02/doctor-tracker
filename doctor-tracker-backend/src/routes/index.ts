@@ -1,5 +1,7 @@
 import { Router } from "express";
 import authRoutes from "./auth";
+import doctorRoutes from "./doctors";
+import patientRoutes from "./patients";
 
 const router = Router();
 
@@ -8,7 +10,9 @@ router.get("/health", (_req, res) => {
 });
 
 router.use("/auth", authRoutes);
+router.use("/doctors", doctorRoutes);
+router.use("/patients", patientRoutes);
 
-// Step 3+: doctors, patients, dashboard routes (all behind `protect`) will be mounted here
+// Step 4: dashboard routes will be mounted here
 
 export default router;
