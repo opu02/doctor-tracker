@@ -1,5 +1,6 @@
 import { Router } from "express";
 import authRoutes from "./auth";
+import dashboardRoutes from "./dashboard";
 import doctorRoutes from "./doctors";
 import patientRoutes from "./patients";
 
@@ -10,9 +11,8 @@ router.get("/health", (_req, res) => {
 });
 
 router.use("/auth", authRoutes);
+router.use("/dashboard", dashboardRoutes);
 router.use("/doctors", doctorRoutes);
 router.use("/patients", patientRoutes);
-
-// Step 4: dashboard routes will be mounted here
 
 export default router;
