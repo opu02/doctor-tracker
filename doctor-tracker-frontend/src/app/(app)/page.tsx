@@ -75,7 +75,7 @@ export default function DashboardPage() {
       </div>
 
       <div className={cn("space-y-6 transition-opacity", isPlaceholderData && "opacity-60")}>
-        <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-label="Key numbers">
+        <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 [&>*]:min-w-0" aria-label="Key numbers">
           <StatCard label="Total doctors" value={number(totals.doctors)} icon={<Stethoscope className="size-5" />} />
           <StatCard
             label="Total patients"
@@ -98,7 +98,7 @@ export default function DashboardPage() {
           />
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-3">
+        <section className="grid gap-6 lg:grid-cols-3 [&>*]:min-w-0">
           <Card className="lg:col-span-2">
             <CardHeader title="Patient admissions" description={`Admitted per day, last ${days} days`} />
             <CardBody>
@@ -113,7 +113,7 @@ export default function DashboardPage() {
           </Card>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-3">
+        <section className="grid gap-6 lg:grid-cols-3 [&>*]:min-w-0">
           <Card className="lg:col-span-2">
             <CardHeader title="Patients per doctor" description="Top 10 doctors by number of patients" />
             <CardBody>
@@ -128,7 +128,7 @@ export default function DashboardPage() {
           </Card>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-3">
+        <section className="grid gap-6 lg:grid-cols-3 [&>*]:min-w-0">
           <Card>
             <CardHeader title="Doctors by specialization" />
             <CardBody>

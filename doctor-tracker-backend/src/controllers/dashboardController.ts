@@ -79,7 +79,7 @@ export async function getDashboardSummary(req: Request, res: Response) {
     Patient.aggregate<{ _id: string; count: number }>([
       { $group: { _id: "$condition", count: { $sum: 1 } } },
       { $sort: { count: -1, _id: 1 } },
-      { $limit: 8 },
+      { $limit: 7 },
     ]),
 
     Doctor.aggregate<{ _id: string; count: number }>([
@@ -94,6 +94,11 @@ export async function getDashboardSummary(req: Request, res: Response) {
 
     listPatients({ page: 1, limit: 5, sort: "newest" }),
   ]);
+
+  // Top 7 conditions + an "Other" slice, so the donut always adds up to the total patients
+  const conditions = nameCount(conditionRows);
+  const otherPatients = totalPatients - conditions.reduce((sum, item) => sum + item.count, 0);
+  if (otherPatients > 0) conditions.push({ name: "Other", count: otherPatients });
 
   const dailyCounts = new Map(dailyRows.map((row) => [row._id, row.count]));
   const changePercent =
@@ -114,7 +119,7 @@ export async function getDashboardSummary(req: Request, res: Response) {
       },
       patientsOverTime: fillDailySeries(start, days, dailyCounts),
       patientsPerDoctor: perDoctorRows,
-      conditions: nameCount(conditionRows),
+      conditions,
       specializations: nameCount(specializationRows),
       gender: nameCount(genderRows),
       recentPatients: recent.data,

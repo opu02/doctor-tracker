@@ -30,3 +30,21 @@ export function initials(name: string): string {
 }
 
 export const number = (value: number) => new Intl.NumberFormat("en-US").format(value);
+
+const DHAKA = "Asia/Dhaka";
+
+/** ISO timestamp -> "YYYY-MM-DD" in Dhaka time (value for <input type="date">). */
+export function toDateInput(value: string | Date): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: DHAKA }).format(new Date(value));
+}
+
+export const todayInput = () => toDateInput(new Date());
+
+/** "YYYY-MM-DD" (a Dhaka calendar day) -> ISO timestamp at noon Dhaka time, so the day never shifts. */
+export function dateInputToIso(day: string): string {
+  return new Date(`${day}T12:00:00+06:00`).toISOString();
+}
+
+/** Filter helpers: start / end of a Dhaka calendar day as ISO strings (empty stays empty). */
+export const rangeStart = (day: string) => (day ? new Date(`${day}T00:00:00+06:00`).toISOString() : undefined);
+export const rangeEnd = (day: string) => (day ? new Date(`${day}T23:59:59.999+06:00`).toISOString() : undefined);
